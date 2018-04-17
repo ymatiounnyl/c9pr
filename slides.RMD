@@ -1,0 +1,54 @@
+---
+title: 'Using shiny application for interactive analysis of MTCARS dataset: project
+  for the ''Developing Data Products'' Coursera class.'
+author: "Youri Matiounine"
+date: "April 16, 2018"
+output:
+  beamer_presentation: default
+  slidy_presentation: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Description of the shiny application
+
+This application performs a regression of MTCARS dataset to determine if transmission type impacts miles per gallon (MPG). 
+
+The UI allows user to select which variables are used in a regression, and then displays some output from that regression.
+
+Selectable variables are all but AM (which is always used) and MPG (which is being predicted).
+
+Output is a residual plot, and 3 values: AM regression coefficient, its P-value, and STD of the residuals.
+
+
+## Benefits of using shiny
+
+- Visual presentation of the results
+- Immediate response
+- Ability to try multiple approaches
+- Flexible structure of result output
+- Ability to distribute the application to a wide audience
+
+
+## Sample output
+
+```{r sample}
+fit1<-lm(mpg~am+wt,data=mtcars)
+plot(resid(fit1)~mtcars$mpg,xlab="MPG",ylab="Residuals",main="Residual Plot")
+
+sf1<-summary(fit1)
+print("Increase in MPG for a manual transmission:")
+sf1$coefficients[2,1] # coeff of AM variable
+print("P-value of impact of a manual transmission on MPG:")
+sf1$coefficients[2,4] # P-value of AM variable
+print("STD of residuals:")
+sf1$sigma # STD of residuals
+```
+
+## Conclusion
+
+Shiny allows quick development and deployment of interative applications.
+
+Application developed for this presentation illustrates basic capabilities of shiny, and can be used as a starting point for furhter development.
